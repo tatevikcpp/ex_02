@@ -31,9 +31,9 @@ int main(int c, char **v)
 {
     if (c > 2)
     {
-        // std::vector<int>A;
-        std::deque<int> A;
-        PmergeMe<int> obj;
+        std::vector<int> vec;
+        std::deque<int> dec;
+
         for (int i = 1; i < c; i++)
         {
             checkDigit(v);
@@ -42,15 +42,25 @@ int main(int c, char **v)
             {
                 throw std::invalid_argument("error");
             }
-            A.push_back(a);
+            vec.push_back(a);
+            dec.push_back(a);
         }
-        MergeInsert(A, 0, A.size() - 1);
-        std::cout << "in Insretionsort\n";
-        for (int i = 0; i < A.size(); ++i)
-        {
-            std::cout << A[i] << " ";
-        }
-        std::cout << std::endl;
+        std::cout << "Before: " << std::endl;
+        print(vec);
+        std::cout << '\n';
+        double start_time_vec = get_currenet_time();
+        MergeInsert(vec, 0, vec.size() - 1);
+        double end_time_vec = get_currenet_time();
+
+        double start_time_dec = get_currenet_time();
+        MergeInsert(dec, 0, dec.size() - 1);
+        double end_time_dec = get_currenet_time();
+
+        std::cout << "Aftr: \n";
+        print(vec);
+        std::cout << '\n';
+        std::cout << "Time to process a range of " << dec.size() << " elements with std::deque  : " << end_time_dec - start_time_dec  << " us" << std::endl;
+        std::cout << "Time to process a range of " << vec.size() << " elements with std::vector : " << end_time_vec - start_time_vec  << " us" << std::endl;
     }
     else
     {
