@@ -1,44 +1,56 @@
 #include "PmergeMe.hpp"
+#include <sys/time.h>
 
 void checkDigit(char **str)
 {
     int i = 1;
-    while(str[i])
+    while (str[i])
     {
         int j = 0;
-        while(str[i][j])
+        while (str[i][j])
         {
-            if(!isdigit(str[i][j]))
+            if (!isdigit(str[i][j]))
             {
                 throw std::invalid_argument("Bad input");
-            }            
+            }
             j++;
         }
         i++;
     }
 }
 
-int main(int c, char **v) 
+
+long double get_currenet_time()
+{
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+}
+
+int main(int c, char **v)
 {
     if (c > 2)
     {
         // std::vector<int>A;
-        std::vector<int> A;
+        std::deque<int> A;
         PmergeMe<int> obj;
         for (int i = 1; i < c; i++)
         {
             checkDigit(v);
             int a = atoi(v[i]);
-            if(a < 0)
+            if (a < 0)
             {
                 throw std::invalid_argument("error");
             }
             A.push_back(a);
         }
-        // std::cout << "cont.size() = " << cont.size() << "\n";
-        // obj.MergeInsert(A, 0, A.size() - 1);
-        obj.MergeSort(A, 0, (A.size() - 1) / 2, A.size() - 1);
-        // MergeInsert(A, 0, A.size() - 1);
+        MergeInsert(A, 0, A.size() - 1);
+        std::cout << "in Insretionsort\n";
+        for (int i = 0; i < A.size(); ++i)
+        {
+            std::cout << A[i] << " ";
+        }
+        std::cout << std::endl;
     }
     else
     {
@@ -46,26 +58,6 @@ int main(int c, char **v)
     }
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // #include <iostream>
 // #include <vector>
@@ -80,10 +72,11 @@ int main(int c, char **v)
 
 // while (i < price.size())
 // {
-//     if ((price[i]>= min_price && price[i] <= max_price) /* && (price.at(i + 1)>= min_price && price.at(i+ 1) <= max_price) */)
+//     if ((price[i]>= min_price && price[i] <= max_price) /*
+//  && (price.at(i + 1)>= min_price && price.at(i+ 1) <= max_price) */)
 //     {
 //         vec.push_back(price[i]);
-//         // std::cout << "veci = "<< vec[i] << "\n"; 
+//         // std::cout << "veci = "<< vec[i] << "\n";
 //     }
 //     else
 //         break;
@@ -97,7 +90,7 @@ int main(int c, char **v)
 // //     l++;
 // // }
 
-// std::cout << "veci = "<< vec.at(0) << "\n"; 
+// std::cout << "veci = "<< vec.at(0) << "\n";
 
 // if (vec.empty())
 //     return (0);
